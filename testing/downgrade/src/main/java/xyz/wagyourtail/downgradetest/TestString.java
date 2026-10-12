@@ -52,6 +52,22 @@ public class TestString {
         String s = null;
         System.out.println("" + s);
 
+        double dbl = 1.5d;
+        System.out.println(lo + "");
+        System.out.println("double: " + dbl);
+        System.out.println(dbl + " " + lo + " " + dbl + " " + lo);
+
+        StringBuilder order = new StringBuilder();
+        System.out.println("order: " + new Ordered("a", order) + lo + new Ordered("b", order) + dbl + new Ordered("c", order) + " " + order);
+
+        String acc = "";
+        for (int i = 0; i < 4; i++) {
+            long sq = (long) i * i;
+            acc += i % 2 == 0 ? i + ":" + sq + ";" : "odd" + sq + ";";
+            acc += i / 2.0 + "," + acc.length() + "|";
+        }
+        System.out.println(acc);
+
         char[] out = new char[3];
         "abcde".getChars(0, 3, out, 0);
         System.out.println(out);
@@ -72,6 +88,23 @@ public class TestString {
        System.out.println(String.UNICODE_CASEFOLD_ORDER.compare(aa, bb));
 
         System.out.println(("\u0001test\u0002" + by + "test\u0001" + sh + "test2" + bb + "\u0002test").replace("\u0001", "\\u0001").replace("\u0002", "\\u0002"));
+    }
+
+    static class Ordered {
+        final String name;
+        final StringBuilder order;
+
+        Ordered(String name, StringBuilder order) {
+            this.name = name;
+            this.order = order;
+        }
+
+        @Override
+        public String toString() {
+            order.append(name);
+            return name;
+        }
+
     }
 
 }
