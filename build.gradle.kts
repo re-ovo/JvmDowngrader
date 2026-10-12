@@ -245,15 +245,11 @@ tasks.publish.configure {
 publishing {
     repositories {
         maven {
-            name = "WagYourMaven"
-            url = if (project.hasProperty("version_snapshot")) {
-                uri("https://maven.wagyourtail.xyz/snapshots/")
-            } else {
-                uri("https://maven.wagyourtail.xyz/releases/")
-            }
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/re-ovo/JvmDowngrader")
             credentials {
-                username = project.findProperty("mvn.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("mvn.key") as String? ?: System.getenv("TOKEN")
+                username = project.findProperty("mvn.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("mvn.key") as String? ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }

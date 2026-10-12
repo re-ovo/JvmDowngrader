@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
@@ -28,10 +31,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Publish
-        env:
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-        run: ./gradlew publish -Pversion_snapshot -Pmvn.user=${{ secrets.MAVEN_USER }} -Pmvn.key=${{ secrets.MAVEN_TOKEN }}
+        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository -Pis_local -Pversion_snapshot -Pmvn.user=${{ github.actor }} -Pmvn.key=${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         with:
